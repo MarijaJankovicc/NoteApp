@@ -6,29 +6,31 @@ import {Header} from "./components/Header"
 
 const App=() => {
 
-  const [notes, setNotes] = useState(
-    !localStorage.getItem("notes-app-data")
-    ? [
-    {
-      id: nanoid(),
-      text: "Note 1",
-      date: "2/24/2022"
-    },
-    {
-      id: nanoid(),
-      text: "Note 2",
-      date: "2/24/2022"
-    },
-    {
-      id: nanoid(),
-      text: "Note 3",
-      date: "2/24/2022"
-    },
-    {
-      id: nanoid(),
-      text: "Note 4",
-      date: "2/24/2022"
-    }]: JSON.parse(localStorage.getItem("notes-app-data")));
+  // const [notes, setNotes] = useState(
+  //   !localStorage.getItem("notes-app-data")
+  //   ? [
+  //   {
+  //     id: nanoid(),
+  //     text: "Note 1",
+  //     date: "2/24/2022"
+  //   },
+  //   {
+  //     id: nanoid(),
+  //     text: "Note 2",
+  //     date: "2/24/2022"
+  //   },
+  //   {
+  //     id: nanoid(),
+  //     text: "Note 3",
+  //     date: "2/24/2022"
+  //   },
+  //   {
+  //     id: nanoid(),
+  //     text: "Note 4",
+  //     date: "2/24/2022"
+  //   }]: JSON.parse(localStorage.getItem("notes-app-data")));
+
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes-app-data")));
 
   const [darkMode, setDarkMode] = useState(false);
   
