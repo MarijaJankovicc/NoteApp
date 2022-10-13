@@ -6,6 +6,8 @@ export function AddNote({ handleAddNote }) {
 
     const [noteText, setNoteText] = useState('');
     const characterLimit = 300;
+    const [color, setColor] = useState("#e4ee91");
+    
 
     const handleChange = (event) => {
         if(characterLimit - event.target.value.length >= 0){
@@ -15,16 +17,15 @@ export function AddNote({ handleAddNote }) {
 
     const handleSaveClick = () => {
         if(noteText.trim().length > 0){
-            handleAddNote(noteText);
+            handleAddNote(noteText, color);
             setNoteText('');
         }     
     };
 
-    const [circleColor, setCircleColor] = useState("#e4ee91");
 
     return (
-        <div className="note new" style={{backgroundColor: circleColor}}>
-            <textarea rows="8" cols="10" placeholder="Type to add a note..." value={noteText} onChange={handleChange} style={{backgroundColor: circleColor}}></textarea>
+        <div className="note new" style={{backgroundColor: color}}>
+            <textarea rows="8" cols="10" placeholder="Type to add a note..." value={noteText} onChange={handleChange} style={{backgroundColor: color}}></textarea>
             <div className="note-footer">
                 <small>{characterLimit - noteText.length} Remaining</small>
                 <button className="btn" onClick={handleSaveClick}>Save</button>
@@ -32,9 +33,9 @@ export function AddNote({ handleAddNote }) {
            
             <div className="note-footer">      
                 <CirclePicker
-                    color={circleColor}
+                    color={color}
                     colors={["#fec971", "#fe9b72", "#b693fd", "#00d4fe", "#e4ee91"]}
-                    onChange={(e) => setCircleColor(e.hex)}
+                    onChange={(e) => setColor(e.hex)}
                 />
             </div>
         </div>

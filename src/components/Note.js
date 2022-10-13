@@ -1,8 +1,8 @@
 import { MdDeleteForever } from 'react-icons/md';
 
-export function Note({ id, text, date, handleDeleteNote }) {
+export function Note({ id, text, date, handleDeleteNote, color }) {
     return (
-      <div className="note" >
+      <div className="note" style={{backgroundColor: color}}>
         <span>{text}</span>
         <div className="note-footer">
             <small>{date}</small>

@@ -10,6 +10,7 @@ export function NoteList({ notes, handleAddNote, handleDeleteNote }) {
 					id={note.id}
 					text={note.text}
 					date={note.date}
+					color={note.color}
 					handleDeleteNote={handleDeleteNote}
 				/>
 			))}

@@ -36,7 +36,7 @@ const App=() => {
   
   const [searchText, setSearchText] = useState('');
 
-
+  
 	useEffect(() => {
 		localStorage.setItem(
 			'notes-app-data',
@@ -44,12 +44,13 @@ const App=() => {
 		);
 	}, [notes]);
 
-  const addNote = (text) => {
+  const addNote = (text, color) => {
      const date = new Date();
      const newNote = {
         id: nanoid(),
         text: text,
-        date: date.toLocaleDateString()
+        date: date.toLocaleDateString(),
+        color: color
      }
      const newNotes = [...notes, newNote];
      setNotes(newNotes);
@@ -58,7 +59,8 @@ const App=() => {
   const deleteNote = (id) => {
       const newNotes = notes.filter((note) => note.id !== id);
       setNotes(newNotes);
-  }
+  };
+
 
   return (
     <div className={`${darkMode && 'dark-mode'}`}>
@@ -67,7 +69,8 @@ const App=() => {
         <Search handleSearchNote={setSearchText}/>
         <NoteList notes={notes.filter((note) => note.text.toLowerCase().includes(searchText))} 
                   handleAddNote={addNote} 
-                  handleDeleteNote={deleteNote}/>
+                  handleDeleteNote={deleteNote}
+        />
       </div>
     </div>
   );
