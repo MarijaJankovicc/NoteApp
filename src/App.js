@@ -44,10 +44,11 @@ const App=() => {
 		);
 	}, [notes]);
 
-  const addNote = (text, color) => {
+  const addNote = (title, text, color) => {
      const date = new Date();
      const newNote = {
         id: nanoid(),
+        title: title,
         text: text,
         date: date.toLocaleDateString(),
         color: color
@@ -67,7 +68,7 @@ const App=() => {
       <div className="container">
         <Header handleToggleDarkMode={setDarkMode}/>
         <Search handleSearchNote={setSearchText}/>
-        <NoteList notes={notes.filter((note) => note.text.toLowerCase().includes(searchText))} 
+        <NoteList notes={notes.filter((note) => note.text.toLowerCase().includes(searchText) || note.title.toLowerCase().includes(searchText))} 
                   handleAddNote={addNote} 
                   handleDeleteNote={deleteNote}
         />

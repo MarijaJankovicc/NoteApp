@@ -8,6 +8,7 @@ export function NoteList({ notes, handleAddNote, handleDeleteNote }) {
 				<Note
                     key={note.id}
 					id={note.id}
+					title={note.title}
 					text={note.text}
 					date={note.date}
 					color={note.color}
