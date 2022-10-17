@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { format, compareAsc, compareDesc } from 'date-fns'
 import { nanoid } from 'nanoid';
 import {NoteList} from "./components/NoteList";
 import {Search} from "./components/Search"
@@ -6,37 +7,12 @@ import {Header} from "./components/Header"
 
 const App=() => {
 
-  // const [notes, setNotes] = useState(
-  //   !localStorage.getItem("notes-app-data")
-  //   ? [
-  //   {
-  //     id: nanoid(),
-  //     text: "Note 1",
-  //     date: "2/24/2022"
-  //   },
-  //   {
-  //     id: nanoid(),
-  //     text: "Note 2",
-  //     date: "2/24/2022"
-  //   },
-  //   {
-  //     id: nanoid(),
-  //     text: "Note 3",
-  //     date: "2/24/2022"
-  //   },
-  //   {
-  //     id: nanoid(),
-  //     text: "Note 4",
-  //     date: "2/24/2022"
-  //   }]: JSON.parse(localStorage.getItem("notes-app-data")));
-
   const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes-app-data")));
 
   const [darkMode, setDarkMode] = useState(false);
   
   const [searchText, setSearchText] = useState('');
 
-  
 	useEffect(() => {
 		localStorage.setItem(
 			'notes-app-data',
@@ -45,12 +21,12 @@ const App=() => {
 	}, [notes]);
 
   const addNote = (title, text, color) => {
-     const date = new Date();
+
      const newNote = {
         id: nanoid(),
         title: title,
         text: text,
-        date: date.toLocaleDateString(),
+        date: format(new Date(), 'MM/dd/yyyy'),
         color: color
      }
      const newNotes = [...notes, newNote];
@@ -62,16 +38,34 @@ const App=() => {
       setNotes(newNotes);
   };
 
+  const sort = (e) => {
+    const sortDirection = e.target.value;
+    console.log(e.target.value);
+    const sortedNotes = [...notes];
+
+    if(sortDirection === 'descending'){
+      setNotes(
+        sortedNotes.slice().sort((a, b) => {
+          return new Date(b.date) - new Date(a.date);
+        }));
+    }else if (sortDirection === 'ascending') {
+      setNotes(
+        sortedNotes.slice().sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        }));
+    }
+    console.log(sortedNotes);
+  }
+
 
   return (
     <div className={`${darkMode && 'dark-mode'}`}>
       <div className="container">
-        <Header handleToggleDarkMode={setDarkMode}/>
+        <Header handleToggleDarkMode={setDarkMode} handleSort={sort}/>
         <Search handleSearchNote={setSearchText}/>
         <NoteList notes={notes.filter((note) => note.text.toLowerCase().includes(searchText) || note.title.toLowerCase().includes(searchText))} 
                   handleAddNote={addNote} 
-                  handleDeleteNote={deleteNote}
-        />
+                  handleDeleteNote={deleteNote}/>
       </div>
     </div>
   );

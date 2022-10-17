@@ -32,6 +32,12 @@ code {
   justify-content: space-between;
 }
 
+.rightHeader {
+  display: flex;
+  align-items: center;
+  
+}
+
 .container {
   max-width: 960px;
   margin-right: auto;
