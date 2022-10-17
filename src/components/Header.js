@@ -6,8 +6,7 @@ export function Header({ handleToggleDarkMode, handleSort}) {
         <div className="header">
             <h1><span className="first-word">React </span><span>Notes</span></h1>
             <span className="rightHeader">     
-                <Select style={{marginRight: "10px", backgroundColor: "white", borderRadius: "10px", fontSize: "small"}}
-                    defaultValue={'sort'} 
+                <Select className="sortBtn" defaultValue={'sort'} 
                     onChange={handleSort}> 
                     <MenuItem value={'sort'} disabled>Sort</MenuItem>
                     <MenuItem value={'ascending'}>ASCENDING</MenuItem>
