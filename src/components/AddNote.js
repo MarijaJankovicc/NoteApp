@@ -6,12 +6,12 @@ export function AddNote({ handleAddNote }) {
 
     const [noteTitle, setNoteTitle] = useState('');
     const [noteText, setNoteText] = useState('');
-    const characterLimit = 300;
+    const CHARACTER_LIMIT = 300;
     const [color, setColor] = useState("#e4ee91");
     
 
     const handleChangeText = (event) => {
-        if(characterLimit - event.target.value.length >= 0){
+        if(CHARACTER_LIMIT - event.target.value.length >= 0){
             setNoteText(event.target.value);
         }
     };
@@ -28,14 +28,13 @@ export function AddNote({ handleAddNote }) {
         }     
     };
 
-
     return (
         <div className="note new" style={{backgroundColor: color}}>
             <input placeholder="Type to add title..." value={noteTitle} onChange={handleChangeTitle} style={{backgroundColor: color}}/>
             <hr/>
             <textarea rows="8" cols="10" placeholder="Type to add text..." value={noteText} onChange={handleChangeText} style={{backgroundColor: color}}></textarea>
             <div className="note-footer">
-                <small>{characterLimit - noteText.length} Remaining</small>
+                <small>{CHARACTER_LIMIT - noteText.length} Remaining</small>
                 <button className="btn" onClick={handleSaveClick}>Save</button>
             </div>
            

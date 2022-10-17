@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { format, compareAsc, compareDesc } from 'date-fns'
+import { format } from 'date-fns'
 import { nanoid } from 'nanoid';
 import {NoteList} from "./components/NoteList";
 import {Search} from "./components/Search"
@@ -8,7 +8,7 @@ import {Header} from "./components/Header"
 const App=() => {
 
   const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes-app-data")));
-
+  
   const [darkMode, setDarkMode] = useState(false);
   
   const [searchText, setSearchText] = useState('');
@@ -21,8 +21,7 @@ const App=() => {
 	}, [notes]);
 
   const addNote = (title, text, color) => {
-
-     const newNote = {
+    const newNote = {
         id: nanoid(),
         title: title,
         text: text,
@@ -40,7 +39,6 @@ const App=() => {
 
   const sort = (e) => {
     const sortDirection = e.target.value;
-    console.log(e.target.value);
     const sortedNotes = [...notes];
 
     if(sortDirection === 'descending'){
@@ -54,9 +52,7 @@ const App=() => {
           return new Date(a.date) - new Date(b.date);
         }));
     }
-    console.log(sortedNotes);
   }
-
 
   return (
     <div className={`${darkMode && 'dark-mode'}`}>
