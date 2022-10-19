@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { CirclePicker } from 'react-color'
-
+import { CirclePicker } from 'react-color';
 
 export function AddNote({ handleAddNote }) {
 
     const [noteTitle, setNoteTitle] = useState('');
     const [noteText, setNoteText] = useState('');
     const CHARACTER_LIMIT = 300;
-    const [color, setColor] = useState("#e4ee91");
-    
+    const [color, setColor] = useState("#fec971");
+
 
     const handleChangeText = (event) => {
         if(CHARACTER_LIMIT - event.target.value.length >= 0){
@@ -38,12 +37,12 @@ export function AddNote({ handleAddNote }) {
                 <button className="btn" onClick={handleSaveClick}>Save</button>
             </div>
            
-            <div className="note-footer">      
-                <CirclePicker
-                    color={color}
+            <div className="note-footer">   
+               
+                <CirclePicker className='circlePicker'
                     colors={["#fec971", "#fe9b72", "#b693fd", "#00d4fe", "#e4ee91"]}
-                    onChange={(e) => setColor(e.hex)}
-                />
+                    onChange={(e) => setColor(e.hex)}/>
+               
             </div>
         </div>
         
