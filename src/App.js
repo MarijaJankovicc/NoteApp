@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { format } from 'date-fns'
 import { nanoid } from 'nanoid';
 import {NoteList} from "./components/NoteList";
@@ -16,14 +16,12 @@ const App=() => {
   const [valueStart, setValueStart] = useState(null);
   const [valueEnd, setValueEnd] = useState(null);
 
-
-	useEffect(() => {
-    notes.length !== 0 &&
-		localStorage.setItem(
+  const setItemToLocalStorage = (newNotes) => {
+    localStorage.setItem(
 			'notes-app-data',
-			JSON.stringify(notes)
+			JSON.stringify(newNotes)
 		);
-	}, [notes]);
+  }
 
   const addNote = (title, text, color) => {
     const newNote = {
@@ -35,11 +33,13 @@ const App=() => {
      }
      const newNotes = [...notes, newNote];
      setNotes(newNotes);
+     setItemToLocalStorage(newNotes);
   };
 
   const deleteNote = (id) => {
       const newNotes = notes.filter((note) => note.id !== id);
       setNotes(newNotes);
+      setItemToLocalStorage(newNotes);
   };
 
   const sort = (e) => {
@@ -70,14 +70,12 @@ const App=() => {
   const dateFilter = (newValueStart, newValueEnd) => {
       const filteredNotes = notes.filter((note)=> (new Date(note.date) >= newValueStart) && (new Date(note.date) <= newValueEnd));  
       setNotes(filteredNotes);
-     //return filteredNotes;
   }
 
   const resetFilter = () => {
     setValueStart(null);
     setValueEnd(null);
     setNotes(JSON.parse(localStorage.getItem("notes-app-data")));
-    console.log(JSON.parse(localStorage.getItem("notes-app-data")));
   }
 
   return (
