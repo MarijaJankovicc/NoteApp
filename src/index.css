@@ -137,8 +137,7 @@ input:focus {
 }
 
 .datePicker {
-  max-width:180px;
-  
+  max-width:180px; 
 }
 
 .dateFilter {
@@ -146,8 +145,7 @@ input:focus {
   align-items: center;
   background-color: white;
   margin-right: 10px;
-  border-radius: 10px;
-  
+  border-radius: 10px;  
 }
 
 
