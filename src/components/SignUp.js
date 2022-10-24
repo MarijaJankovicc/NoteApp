@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import { useNavigate} from 'react-router-dom';
 
@@ -10,6 +10,44 @@ export function SignUp() {
 
     const navigate = useNavigate();
 
+    const fields = [
+        {
+            id: 1,
+            label: "First name",
+            name: "firstName",
+            placeholder: "Enter first name",
+            type: "text"
+        },
+        {
+            id: 2,
+            label: "Last name",
+            name: "lastName",
+            placeholder: "Enter last name",
+            type: "text"
+        },
+        {
+            id: 3,
+            label: "Email",
+            name: "email",
+            placeholder: "Enter email name",
+            type: "email"
+        },
+        {
+            id: 4,
+            label: "Password",
+            name: "password",
+            placeholder: "Enter password",
+            type: "password"
+        },
+        {
+            id: 5,
+            label: "Confirm password",
+            name: "confirmPassword",
+            placeholder: "Confirm password",
+            type: "password"
+        }
+    ];
+   
     const initialValues = {
         firstName: '',
         lastName: '',
@@ -27,8 +65,6 @@ export function SignUp() {
     })
 
     const onSubmit = (values, props) => {
-        console.log(values)
-        console.log(props);
         setTimeout(() => {
             props.resetForm({
                 values: {
@@ -49,35 +85,21 @@ export function SignUp() {
         <Grid>
             <Paper className='paperStyle'>
                 <Grid align='center'>
-                    <Avatar  style={{backgroundColor: "#1bbd7e"}}><AddCircleOutlineOutlinedIcon/></Avatar>
+                    <Avatar><AddCircleOutlineOutlinedIcon/></Avatar>
                     <h2>Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to enter Note App!</Typography>
                 </Grid>
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     {(formik) => (
                         <Form>
-                            <Field as={TextField} label='First name' name="firstName"
-                                placeholder='Enter first name' fullWidth required
-                                helperText={<ErrorMessage name="firstName" />}
-                            />
-                            <Field as={TextField} label='Last name' name="lastName"
-                                placeholder='Enter last name' fullWidth required
-                                helperText={<ErrorMessage name="lastName" />}
-                            />
-                            <Field as={TextField} label='Email' name="email"
-                                placeholder='Enter email' fullWidth required
-                                helperText={<ErrorMessage name="email" />}
-                            />
-                            <Field as={TextField} label='Password' name="password"
-                                placeholder='Enter password' type='password' fullWidth required
-                                helperText={<ErrorMessage name="password" />} />
-
-                            <Field as={TextField} label='Confirm password' name="confirmPassword"
-                                placeholder='Confirm password' type='password' fullWidth required
-                                helperText={<ErrorMessage name="confirmPassword" />} />
                             
+                            {fields.map((item) => (
+                                 <Field as={TextField} key={item.id} label={item.label}
+                                 name={item.name} placeholder={item.placeholder} fullWidth required type={item.type}
+                                 helperText={<ErrorMessage name={item.name} />}/>
+                            ))}
                             <Button type='submit' color='primary' variant="contained"  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) }
-                               style={{marginTop: "20px"}} onClick={() => navigate("/app")}>SIGN UP
+                               onClick={() => navigate("/app")}>SIGN UP
                             </Button>
 
                         </Form>

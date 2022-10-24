@@ -144,6 +144,14 @@ input:focus {
   margin: 70px auto;
 }
 
+.MuiAvatar-root {
+  background-color: #1bbd7e !important;
+}
+
 .MuiFormHelperText-root{
   color:red !important;
+}
+
+.MuiButton-root {
+  margin-top: 20px  !important;
 }
