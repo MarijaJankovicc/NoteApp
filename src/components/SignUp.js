@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate} from 'react-router-dom';
 
+
 export function SignUp() {
 
     const navigate = useNavigate();
@@ -41,7 +42,7 @@ export function SignUp() {
 
     
     return (
-      
+        <>
         <Grid>
             <Paper className='paperStyle'>
                 <Grid align='center'>
@@ -69,7 +70,7 @@ export function SignUp() {
                                 helperText={<ErrorMessage name="password" />} />
                             
                             <Button type='submit' color='primary' variant="contained"  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) }
-                               style={{marginTop: "20px"}}>SIGN UP
+                               style={{marginTop: "20px"}} onClick={() => navigate("/app")}>SIGN UP
                             </Button>
 
                         </Form>
@@ -77,6 +78,6 @@ export function SignUp() {
                 </Formik>
             </Paper>
         </Grid>  
-           
+        </>
     );
 }
