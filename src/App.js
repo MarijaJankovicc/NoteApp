@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid';
 import {NoteList} from "./components/NoteList";
 import {Search} from "./components/Search"
 import {Header} from "./components/Header"
+import { SignUp } from "./components/SignUp";
+import {Routes, Router, Route} from 'react-router-dom';
 
 const App=() => {
 
@@ -54,7 +56,16 @@ const App=() => {
     }
   }
 
+
   return (
+    <>
+
+    <Router>
+      <Route path='/' component={<SignUp />}></Route>
+      <Route path='/app' component={<App />}></Route>
+    </Router>
+    
+
     <div className={`${darkMode && 'dark-mode'}`}>
       <div className="container">
         <Header handleToggleDarkMode={setDarkMode} handleSort={sort}/>
@@ -64,6 +75,7 @@ const App=() => {
                   handleDeleteNote={deleteNote}/>
       </div>
     </div>
+    </>
   );
 }
 

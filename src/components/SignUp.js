@@ -3,9 +3,11 @@ import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
+import { useNavigate} from 'react-router-dom';
 
 export function SignUp() {
+
+    const navigate = useNavigate();
 
     const initialValues = {
         firstName: '',
@@ -13,6 +15,7 @@ export function SignUp() {
         email: '',
         password: '',
     }
+
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("Required"),
         lastName: Yup.string().required("Required"),
@@ -24,10 +27,16 @@ export function SignUp() {
         console.log(values)
         console.log(props);
         setTimeout(() => {
-            props.resetForm()
+            props.resetForm({
+                values: {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    password: '',
+                },
+            })
             props.setSubmitting(false)
         }, 2000)
-
     }
 
     
@@ -41,17 +50,17 @@ export function SignUp() {
                     <Typography variant='caption' gutterBottom>Please fill this form to enter Note App!</Typography>
                 </Grid>
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                    {(props) => (
+                    {(formik) => (
                         <Form>
                             <Field as={TextField} label='First name' name="firstName"
                                 placeholder='Enter first name' fullWidth required
                                 helperText={<ErrorMessage className='errorMessage' name="firstName" />}
                             />
-                             <Field as={TextField} label='Last name' name="lastName"
+                            <Field as={TextField} label='Last name' name="lastName"
                                 placeholder='Enter last name' fullWidth required
                                 helperText={<ErrorMessage name="lastName" />}
                             />
-                              <Field as={TextField} label='Email' name="email"
+                            <Field as={TextField} label='Email' name="email"
                                 placeholder='Enter email' fullWidth required
                                 helperText={<ErrorMessage name="email" />}
                             />
@@ -59,8 +68,9 @@ export function SignUp() {
                                 placeholder='Enter password' type='password' fullWidth required
                                 helperText={<ErrorMessage name="password" />} />
                             
-                            <Button type='submit' color='primary' variant="contained" disabled={props.isSubmitting}
-                               style={{marginTop: "20px"}}>{props.isSubmitting ? "Loading" : "Sign up"}</Button>
+                            <Button type='submit' color='primary' variant="contained"  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) }
+                               style={{marginTop: "20px"}}>SIGN UP
+                            </Button>
 
                         </Form>
                     )}
