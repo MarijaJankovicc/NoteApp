@@ -135,3 +135,14 @@ input:focus {
 .circlePicker span div span div {
   border: 1px solid black; 
 }
+
+.paperStyle {
+  padding: 20px; 
+  height: 450px;
+  width: 300px; 
+  margin: 70px auto;
+}
+
+.MuiFormHelperText-root{
+  color:red !important;
+}
