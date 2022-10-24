@@ -4,11 +4,8 @@ import { nanoid } from 'nanoid';
 import {NoteList} from "./components/NoteList";
 import {Search} from "./components/Search"
 import {Header} from "./components/Header"
-import { useNavigate } from "react-router-dom";
 
 const App=() => {
-
-  const navigate = useNavigate();
 
   const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes-app-data")));
   

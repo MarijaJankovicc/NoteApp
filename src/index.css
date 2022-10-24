@@ -68,6 +68,7 @@ textarea:focus {
   border: 3px solid green;
   border-radius: 15px;
   padding: 5px 10px 5px 10px;
+  margin-right: 10px;
 }
 
 .btn:hover {
@@ -138,7 +139,7 @@ input:focus {
 
 .paperStyle {
   padding: 20px; 
-  height: 500px;
+  height: 600px;
   width: 300px; 
   margin: 70px auto;
 }

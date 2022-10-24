@@ -15,13 +15,15 @@ export function SignUp() {
         lastName: '',
         email: '',
         password: '',
+        confirmPassword: ''
     }
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required("Required"),
-        lastName: Yup.string().required("Required"),
+        firstName: Yup.string().required("Required").matches(/^[A-Za-z]+$/, 'This field cannot contain white space and special characters'),
+        lastName: Yup.string().required("Required").matches(/^[A-Za-z]+$/, 'This field cannot contain white space and special characters'),
         email: Yup.string().email('Please enter valid email').required("Required"),
-        password: Yup.string().min(6, "Password must contain at least 6 characters").required("Required")
+        password: Yup.string().min(6, "Password must contain at least 6 characters").required("Required"),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required("Required"),
     })
 
     const onSubmit = (values, props) => {
@@ -34,6 +36,7 @@ export function SignUp() {
                     lastName: '',
                     email: '',
                     password: '',
+                    confirmPassword: '',
                 },
             })
             props.setSubmitting(false)
@@ -55,7 +58,7 @@ export function SignUp() {
                         <Form>
                             <Field as={TextField} label='First name' name="firstName"
                                 placeholder='Enter first name' fullWidth required
-                                helperText={<ErrorMessage className='errorMessage' name="firstName" />}
+                                helperText={<ErrorMessage name="firstName" />}
                             />
                             <Field as={TextField} label='Last name' name="lastName"
                                 placeholder='Enter last name' fullWidth required
@@ -68,6 +71,10 @@ export function SignUp() {
                             <Field as={TextField} label='Password' name="password"
                                 placeholder='Enter password' type='password' fullWidth required
                                 helperText={<ErrorMessage name="password" />} />
+
+                            <Field as={TextField} label='Confirm password' name="confirmPassword"
+                                placeholder='Confirm password' type='password' fullWidth required
+                                helperText={<ErrorMessage name="confirmPassword" />} />
                             
                             <Button type='submit' color='primary' variant="contained"  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) }
                                style={{marginTop: "20px"}} onClick={() => navigate("/app")}>SIGN UP
