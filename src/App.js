@@ -79,6 +79,7 @@ const App=() => {
   }
 
   return (
+    <>
     <div className={`${darkMode && 'dark-mode'}`}>
       <div className="container">
         <Header handleToggleDarkMode={setDarkMode} handleSort={sort} 
@@ -95,6 +96,7 @@ const App=() => {
                   />
       </div>
     </div>
+    </>
   );
 }
 

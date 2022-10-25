@@ -68,9 +68,23 @@ textarea:focus {
   border: 3px solid green;
   border-radius: 15px;
   padding: 5px 10px 5px 10px;
+  margin-right: 8px;
+}
+
+.btnFilter {
+  background-color: #e1e1e1;
+  border: 3px solid green;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+
 }
 
 .btn:hover {
+  background-color: #ededed;
+  cursor: pointer;
+}
+
+.btnFilter:hover {
   background-color: #ededed;
   cursor: pointer;
 }
@@ -126,26 +140,45 @@ input:focus {
 }
 
 .sortBtn {
-  margin-right: 10px;
+  margin-right: 8px;
   background-color: white;
   border-radius: 10px;
   font-size: small;
+  max-width: 155px;
 }
 
 .circlePicker span div span div {
   border: 1px solid black; 
 }
 
+.paperStyle {
+  padding: 20px; 
+  height: 600px;
+  width: 300px; 
+  margin: 70px auto;
+}
+
+.MuiAvatar-root {
+  background-color: #1bbd7e !important;
+}
+
+.MuiFormHelperText-root{
+  color:red !important;
+}
+
+.MuiButton-root {
+  margin-top: 20px  !important;
+}
 .datePicker {
-  max-width:180px; 
+  max-width:145px; 
 }
 
 .dateFilter {
   display: flex;
   align-items: center;
   background-color: white;
-  margin-right: 10px;
-  border-radius: 10px;  
+  margin-right: 8px;
+  border-radius: 10px; 
 }
 
 
