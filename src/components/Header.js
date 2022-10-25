@@ -3,7 +3,7 @@ import { MenuItem, Select, TextField} from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker} from '@mui/x-date-pickers/DatePicker';
-import Button from '@mui/material/Button';
+import { useNavigate} from 'react-router-dom';
 
 export function Header({ handleToggleDarkMode, handleSort, handleDateFilter, handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate}) {
 
@@ -25,11 +25,16 @@ export function Header({ handleToggleDarkMode, handleSort, handleDateFilter, han
         }
     ];
 
+    const navigate = useNavigate();
+
     return (
         <div className="header">
+            <div>
             <h1><span className="first-word">React </span><span>Notes</span></h1>
+        
+            </div>
             <span className="rightHeader">   
-                <span className="dateFilter">
+            <div className="dateFilter">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             className="datePicker"
@@ -49,15 +54,16 @@ export function Header({ handleToggleDarkMode, handleSort, handleDateFilter, han
                         />
                     </LocalizationProvider>
             
-                    <Button size="small" variant="text" color="success" onClick={()=> handleDateFilter(valueStart,valueEnd)}>Filter</Button>
-                    <Button size="small" variant="text" color="success" onClick={handleResetFilter}>Reset</Button> 
-                </span>
+                    <button className="btnFilter" onClick={()=> handleDateFilter(valueStart,valueEnd)}>Filter</button>
+                    <button className="btnFilter" onClick={handleResetFilter}>Reset</button> 
+            </div>
                 <Select className="sortBtn" defaultValue={'none'} onChange={handleSort} size="small"> 
                     {menuItem.map((item) => (
                         <MenuItem disabled={item.id===1} key={item.id} value={item.value}>{item.title}</MenuItem>
                     ))}
                 </Select>
                 <button className="btn" onClick={() => handleToggleDarkMode((previousDarkMode) => !previousDarkMode)}>Toggle Mode</button>
+                <button variant="text" color="success" className="btn" onClick={() => navigate("/")}>Log out</button>
             </span>
         </div>
     );
