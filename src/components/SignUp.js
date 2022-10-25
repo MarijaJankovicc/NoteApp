@@ -57,10 +57,10 @@ export function SignUp() {
     }
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required("Required").matches(/^[A-Za-z]+$/, 'This field cannot contain white space and special characters'),
-        lastName: Yup.string().required("Required").matches(/^[A-Za-z]+$/, 'This field cannot contain white space and special characters'),
+        firstName: Yup.string().required("Required").matches("^[A-Z][a-zA-Z]+$", 'Please enter valid first name'),
+        lastName: Yup.string().required("Required").matches("^[A-Z][a-zA-Z]+$", 'Please enter valid last name'),
         email: Yup.string().email('Please enter valid email').required("Required"),
-        password: Yup.string().min(6, "Password must contain at least 6 characters").required("Required"),
+        password: Yup.string().matches("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$", "Password must contain at least 8 characters (uppercase letter, lowercase letter, digit, special character)").required("Required"),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required("Required"),
     })
 
