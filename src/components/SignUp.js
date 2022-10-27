@@ -6,8 +6,11 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp=() => {
+
+  const navigate = useNavigate();
 
   // const fields = [
   //   {
@@ -84,7 +87,11 @@ const SignUp=() => {
           <Grid align='center'>
             <Avatar><AddCircleOutlineOutlinedIcon/></Avatar>
             <h2>Sign Up</h2>
-            <Typography variant='caption' gutterBottom>Already have an account? Sign in!</Typography>
+            <Typography variant='caption'>Already have an account?&nbsp;
+              <Link to='/signin'>
+                Sign in!
+              </Link>
+            </Typography>
           </Grid>
           <Formik initialValues={initialValues} onSubmit={handleSignUp} validationSchema={validationSchema}>
             {(formik) => (
@@ -104,7 +111,7 @@ const SignUp=() => {
                   name='confirmPassword' placeholder='Confirm password' fullWidth required type='password'
                   helperText={<ErrorMessage name='confirmPassword' />}/>
                 <Button type='submit' color='primary' variant='contained'
-                  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) }>SIGN UP
+                  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) } onClick={() => navigate('/app')}>SIGN UP
                 </Button>
 
               </Form>
