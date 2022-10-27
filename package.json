@@ -13,9 +13,11 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "date-fns": "^2.29.3",
-    "formik": "^2.2.9",
     "dayjs": "^1.11.5",
+    "eslint-plugin-react": "^7.31.10",
+    "formik": "^2.2.9",
     "muicss": "^0.10.3",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
@@ -30,7 +32,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js",
+    "lint-fix": "eslint src/**/*.js --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0"
   }
 }
