@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
-const Header=({ handleToggleDarkMode, handleSort, handleDateFilter, handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate}) => {
+const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
+                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate}) => {
 
   const menuItem = [
     {
