@@ -4,7 +4,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,10 +20,6 @@ const SignIn=() => {
     email: Yup.string().email('Please enter valid email').required('Required'),
     password: Yup.string().matches('(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$',
                                    'Password must contain at least 8 characters (uppercase letter, lowercase letter, digit, special character)').required('Required'),
-  });
-
-  onAuthStateChanged(auth, (currentUser) => {
-    console.log(currentUser);
   });
 
   const handleSignIn = async(values, props) => {
