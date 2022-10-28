@@ -4,7 +4,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -66,21 +66,24 @@ const SignUp=() => {
                                          'Passwords must match').required('Required'),
   });
 
-  const handleSignUp = async (values, props) => {
+  const handleSignUp= async (values, props) => {
     try {
-      const user = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         values.email,
         values.password,
       );
-      console.log(user);
+      await updateProfile(auth.currentUser, {
+        displayName: values.firstName + ' ' + values.lastName
+      }).catch(
+        (err) => console.log(err)
+      );
       props.resetForm();
       props.setSubmitting(false);
       navigate('/app');
     } catch (error) {
-      alert('Something is wrong. Try again...');
+      alert('Something went wrong. Try again...');
     }
-
   };
   return (
     <>
@@ -107,7 +110,6 @@ const SignUp=() => {
                 <Button type='submit' color='primary' variant='contained'
                   disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting)}>SIGN UP
                 </Button>
-
               </Form>
             )}
           </Formik>

@@ -24,12 +24,11 @@ const SignIn=() => {
 
   const handleSignIn = async(values, props) => {
     try {
-      const user = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         auth,
         values.email,
         values.password
       );
-      console.log(user);
       props.resetForm();
       props.setSubmitting(false);
       navigate('/app');
