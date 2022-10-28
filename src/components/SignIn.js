@@ -4,7 +4,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,10 @@ const SignIn=() => {
                                    'Password must contain at least 8 characters (uppercase letter, lowercase letter, digit, special character)').required('Required'),
   });
 
+  onAuthStateChanged(auth, (currentUser) => {
+    console.log(currentUser);
+  });
+
   const handleSignIn = async(values, props) => {
     try {
       const user = await signInWithEmailAndPassword(
@@ -30,11 +34,12 @@ const SignIn=() => {
         values.password
       );
       console.log(user);
+      props.resetForm();
+      props.setSubmitting(false);
+      navigate('/app');
     } catch (error) {
-      console.log(error.message);
+      alert('Incorrect email or password! Check again...');
     }
-    props.resetForm();
-    props.setSubmitting(false);
   };
 
   return (
@@ -45,10 +50,10 @@ const SignIn=() => {
             <Avatar><AddCircleOutlineOutlinedIcon/></Avatar>
             <h2>Sign In</h2>
           </Grid>
-          <Formik initialValues={initialValues} onSubmit={handleSignIn} validationSchema={validationSchema}>
+          <Formik initialValues={initialValues} onSubmit={handleSignIn}
+            validationSchema={validationSchema}>
             {(formik) => (
               <Form>
-
                 <Field as={TextField} label='Email'
                   name='email' placeholder='Enter email' fullWidth required type='email'
                   helperText={<ErrorMessage name='email' />}/>
@@ -56,9 +61,8 @@ const SignIn=() => {
                   name='password' placeholder='Enter password' fullWidth required type='password'
                   helperText={<ErrorMessage name='password' />}/>
                 <Button type='submit' color='primary' variant='contained'
-                  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) } onClick={() => navigate('/app')}>SIGN IN
+                  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) }>SIGN IN
                 </Button>
-
               </Form>
             )}
           </Formik>

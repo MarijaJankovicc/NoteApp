@@ -12,73 +12,75 @@ const SignUp=() => {
 
   const navigate = useNavigate();
 
-  // const fields = [
-  //   {
-  //     id: 1,
-  //     label: 'First name',
-  //     name: 'firstName',
-  //     placeholder: 'Enter first name',
-  //     type: 'text'
-  //   },
-  //   {
-  //     id: 2,
-  //     label: 'Last name',
-  //     name: 'lastName',
-  //     placeholder: 'Enter last name',
-  //     type: 'text'
-  //   },
-  //   {
-  //     id: 3,
-  //     label: 'Email',
-  //     name: 'email',
-  //     placeholder: 'Enter email name',
-  //     type: 'email'
-  //   },
-  //   {
-  //     id: 4,
-  //     label: 'Password',
-  //     name: 'password',
-  //     placeholder: 'Enter password',
-  //     type: 'password'
-  //   },
-  //   {
-  //     id: 5,
-  //     label: 'Confirm password',
-  //     name: 'confirmPassword',
-  //     placeholder: 'Confirm password',
-  //     type: 'password'
-  //   }];
+  const fields = [
+    {
+      id: 1,
+      label: 'First name',
+      name: 'firstName',
+      placeholder: 'Enter first name',
+      type: 'text'
+    },
+    {
+      id: 2,
+      label: 'Last name',
+      name: 'lastName',
+      placeholder: 'Enter last name',
+      type: 'text'
+    },
+    {
+      id: 3,
+      label: 'Email',
+      name: 'email',
+      placeholder: 'Enter email name',
+      type: 'email'
+    },
+    {
+      id: 4,
+      label: 'Password',
+      name: 'password',
+      placeholder: 'Enter password',
+      type: 'password'
+    },
+    {
+      id: 5,
+      label: 'Confirm password',
+      name: 'confirmPassword',
+      placeholder: 'Confirm password',
+      type: 'password'
+    }];
   const initialValues = {
-    // firstName: '',
-    // lastName: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: ''
   };
 
   const validationSchema = Yup.object().shape({
-    // firstName: Yup.string().required('Required').matches('^[A-Z][a-zA-Z]+$', 'Please enter valid first name'),
-    // lastName: Yup.string().required('Required').matches('^[A-Z][a-zA-Z]+$', 'Please enter valid last name'),
+    firstName: Yup.string().required('Required').matches('^[A-Z][a-zA-Z]+$', 'Please enter valid first name'),
+    lastName: Yup.string().required('Required').matches('^[A-Z][a-zA-Z]+$', 'Please enter valid last name'),
     email: Yup.string().email('Please enter valid email').required('Required'),
-    password: Yup.string().matches('(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$', 'Password must contain at least 8 characters (uppercase letter, lowercase letter, digit, special character)').required('Required'),
-    confirmPassword: Yup.string().oneOf( [ Yup.ref('password'), null ], 'Passwords must match').required('Required'),
+    password: Yup.string().matches('(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$',
+                                   'Password must contain at least 8 characters (uppercase letter, lowercase letter, digit, special character)').required('Required'),
+    confirmPassword: Yup.string().oneOf( [ Yup.ref('password'), null ],
+                                         'Passwords must match').required('Required'),
   });
 
   const handleSignUp = async (values, props) => {
-    console.log(values);
-    console.log(props);
     try {
       const user = await createUserWithEmailAndPassword(
         auth,
         values.email,
-        values.password
+        values.password,
       );
       console.log(user);
+      props.resetForm();
+      props.setSubmitting(false);
+      navigate('/app');
     } catch (error) {
-      console.log(error.message);
+      alert('Something is wrong. Try again...');
     }
-    props.resetForm();
-    props.setSubmitting(false);
+
   };
   return (
     <>
@@ -93,25 +95,17 @@ const SignUp=() => {
               </Link>
             </Typography>
           </Grid>
-          <Formik initialValues={initialValues} onSubmit={handleSignUp} validationSchema={validationSchema}>
+          <Formik initialValues={initialValues} onSubmit={handleSignUp}
+            validationSchema={validationSchema}>
             {(formik) => (
               <Form>
-                {/* {fields.map((item) => (
-                <Field as={TextField} key={item.id} label={item.label}
-                  name={item.name} placeholder={item.placeholder} fullWidth required type={item.type}
-                  helperText={<ErrorMessage name={item.name} />}/>
-              ))} */}
-                <Field as={TextField} label='Email'
-                  name='email' placeholder='Enter email' fullWidth required type='email'
-                  helperText={<ErrorMessage name='email' />}/>
-                <Field as={TextField} label='Password'
-                  name='password' placeholder='Enter password' fullWidth required type='password'
-                  helperText={<ErrorMessage name='password' />}/>
-                <Field as={TextField} label='Confirm password'
-                  name='confirmPassword' placeholder='Confirm password' fullWidth required type='password'
-                  helperText={<ErrorMessage name='confirmPassword' />}/>
+                {fields.map((item) => (
+                  <Field as={TextField} key={item.id} label={item.label}
+                    name={item.name} placeholder={item.placeholder} fullWidth required type={item.type}
+                    helperText={<ErrorMessage name={item.name} />}/>
+                ))}
                 <Button type='submit' color='primary' variant='contained'
-                  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) } onClick={() => navigate('/app')}>SIGN UP
+                  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting)}>SIGN UP
                 </Button>
 
               </Form>
