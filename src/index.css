@@ -32,6 +32,12 @@ code {
   justify-content: space-between;
 }
 
+.title {
+  display: flex;
+  align-items: center;
+  margin-top: -30px;
+}
+
 .rightHeader {
   display: flex;
   align-items: center;
@@ -181,6 +187,9 @@ input:focus {
   border-radius: 10px; 
 }
 
+.dark-mode h3 {
+  color: white;
+}
 
 
 
