@@ -1,10 +1,12 @@
 import React from 'react';
-import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core';
+import { Grid, Paper, Avatar, Typography, Button, TextField } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import { Formik, Form, Field, ErrorMessage} from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from '../firebase';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp=() => {
 
@@ -58,25 +60,31 @@ const SignUp=() => {
     firstName: Yup.string().required('Required').matches('^[A-Z][a-zA-Z]+$', 'Please enter valid first name'),
     lastName: Yup.string().required('Required').matches('^[A-Z][a-zA-Z]+$', 'Please enter valid last name'),
     email: Yup.string().email('Please enter valid email').required('Required'),
-    password: Yup.string().matches('(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$', 'Password must contain at least 8 characters (uppercase letter, lowercase letter, digit, special character)').required('Required'),
-    confirmPassword: Yup.string().oneOf( [ Yup.ref('password'), null ], 'Passwords must match').required('Required'),
+    password: Yup.string().matches('(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{7,}$',
+                                   'Password must contain at least 8 characters (uppercase letter, lowercase letter, digit, special character)').required('Required'),
+    confirmPassword: Yup.string().oneOf( [ Yup.ref('password'), null ],
+                                         'Passwords must match').required('Required'),
   });
 
-  const onSubmit = (values, props) => {
-    setTimeout(() => {
-      props.resetForm({
-        values: {
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-        },
-      });
+  const handleSignUp= async (values, props) => {
+    try {
+      await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password,
+      );
+      await updateProfile(auth.currentUser, {
+        displayName: values.firstName + ' ' + values.lastName
+      }).catch(
+        (err) => console.log(err)
+      );
+      props.resetForm();
       props.setSubmitting(false);
-    }, 2000);
+      navigate('/app');
+    } catch (error) {
+      alert('Something went wrong. Try again...');
+    }
   };
-
   return (
     <>
       <Grid>
@@ -84,19 +92,24 @@ const SignUp=() => {
           <Grid align='center'>
             <Avatar><AddCircleOutlineOutlinedIcon/></Avatar>
             <h2>Sign Up</h2>
-            <Typography variant='caption' gutterBottom>Please fill this form to enter Note App!</Typography>
+            <Typography variant='caption'>Already have an account?&nbsp;
+              <Link to='/signin'>
+                Sign in!
+              </Link>
+            </Typography>
           </Grid>
-          <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+          <Formik initialValues={initialValues} onSubmit={handleSignUp}
+            validationSchema={validationSchema}>
             {(formik) => (
-              <Form>{fields.map((item) => (
-                <Field as={TextField} key={item.id} label={item.label}
-                  name={item.name} placeholder={item.placeholder} fullWidth required type={item.type}
-                  helperText={<ErrorMessage name={item.name} />}/>
-              ))}
-              <Button type='submit' color='primary' variant='contained' disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting) }
-                onClick={() => navigate('/app')}>SIGN UP
-              </Button>
-
+              <Form>
+                {fields.map((item) => (
+                  <Field as={TextField} key={item.id} label={item.label}
+                    name={item.name} placeholder={item.placeholder} fullWidth required type={item.type}
+                    helperText={<ErrorMessage name={item.name} />}/>
+                ))}
+                <Button type='submit' color='primary' variant='contained'
+                  disabled={ ((!(formik.isValid && formik.dirty)) || formik.isSubmitting)}>SIGN UP
+                </Button>
               </Form>
             )}
           </Formik>
