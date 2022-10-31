@@ -32,7 +32,11 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
   const navigate = useNavigate();
 
   const signout = async () => {
-    await signOut(auth);
+    await signOut(auth).then(() => {
+      console.log('successful log out');
+    }).catch((error) => {
+      console.log(error.message);
+    });
     navigate('/');
   };
 
