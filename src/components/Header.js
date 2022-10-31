@@ -5,8 +5,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker} from '@mui/x-date-pickers/DatePicker';
 import { useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 
-const Header=({ handleToggleDarkMode, handleSort, handleDateFilter, handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate}) => {
+const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
+                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate}) => {
 
   const menuItem = [
     {
@@ -27,6 +30,11 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter, handleResetF
   ];
 
   const navigate = useNavigate();
+
+  const signout = async () => {
+    await signOut(auth);
+    navigate('/');
+  };
 
   return (
     <div className='header'>
@@ -59,7 +67,7 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter, handleResetF
           ))}
         </Select>
         <button className='btn' onClick={() => handleToggleDarkMode((previousDarkMode) => !previousDarkMode)}>Toggle Mode</button>
-        <button color='success' className='btn' onClick={() => navigate('/')}>Log out</button>
+        <button color='success' className='btn' onClick={signout}>Sign out</button>
       </span>
     </div>
   );

@@ -6,7 +6,8 @@ const Search=({ handleSearchNote }) => {
   return (
     <div className='search'>
       <MdSearch className='search-icons' size='1.3em'/>
-      <input onChange={(ev) => handleSearchNote(ev.target.value)} type='text' placeholder='Search for your notes...' style={{paddingTop: '15px', paddingBottom: '15px'}}/>
+      <input onChange={(ev) => handleSearchNote(ev.target.value)} type='text' placeholder='Search for your notes...'
+        style={{paddingTop: '15px', paddingBottom: '15px'}}/>
     </div>
   );
 };

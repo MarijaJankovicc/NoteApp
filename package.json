@@ -15,6 +15,7 @@
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.5",
     "eslint-plugin-react": "^7.31.10",
+    "firebase": "^9.12.1",
     "formik": "^2.2.9",
     "muicss": "^0.10.3",
     "prop-types": "^15.8.1",

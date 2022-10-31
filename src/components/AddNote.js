@@ -29,9 +29,12 @@ const AddNote=({ handleAddNote }) => {
 
   return (
     <div className='note new' style={{backgroundColor: color}}>
-      <input placeholder='Type to add title...' value={noteTitle} onChange={handleChangeTitle} style={{backgroundColor: color}}/>
+      <input placeholder='Type to add title...' value={noteTitle}
+        onChange={handleChangeTitle} style={{backgroundColor: color}}/>
       <hr/>
-      <textarea rows='8' cols='10' placeholder='Type to add text...' value={noteText} onChange={handleChangeText} style={{backgroundColor: color}}></textarea>
+      <textarea rows='8' cols='10' placeholder='Type to add text...' value={noteText}
+        onChange={handleChangeText} style={{backgroundColor: color}}>
+      </textarea>
       <div className='note-footer'>
         <small>{CHARACTER_LIMIT - noteText.length} Remaining</small>
         <button className='btn' onClick={handleSaveClick}>Save</button>
