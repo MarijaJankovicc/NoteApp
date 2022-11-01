@@ -9,7 +9,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
 const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
-                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate}) => {
+                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate }) => {
 
   const menuItem = [
     {
@@ -75,7 +75,7 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
           <button color='success' className='btn' onClick={signout}>Sign out</button>
         </span>
       </div>
-      <div className='title'><h3>Hello, User!</h3></div>
+      <div className='title'><h3>Hello, {auth.currentUser.displayName}!</h3></div>
     </div>
   );
 };
@@ -88,7 +88,7 @@ Header.propTypes = {
   valueStart: PropTypes.object,
   valueEnd: PropTypes.object,
   handleStartDate: PropTypes.func,
-  handleEndDate: PropTypes.func
+  handleEndDate: PropTypes.func,
 };
 
 export default Header;

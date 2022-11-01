@@ -1,9 +1,11 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import NoteList from './components/NoteList';
 import Search from './components/Search';
 import Header from './components/Header';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
 
 const App=() => {
 
@@ -12,6 +14,14 @@ const App=() => {
   const [ searchText, setSearchText ] = useState('');
   const [ valueStart, setValueStart ] = useState(null);
   const [ valueEnd, setValueEnd ] = useState(null);
+
+  const [ user, setUser ] = useState({});
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, [user]);
 
   const setItemToLocalStorage = (newNotes) => {
     localStorage.setItem(
