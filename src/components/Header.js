@@ -1,4 +1,4 @@
-import {React} from 'react';
+import { React } from 'react';
 import { MenuItem, Select, TextField} from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -9,7 +9,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
 const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
-                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate }) => {
+                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate, currentUser }) => {
 
   const menuItem = [
     {
@@ -75,7 +75,10 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
           <button color='success' className='btn' onClick={signout}>Sign out</button>
         </span>
       </div>
-      <div className='title'><h3>Hello, {auth.currentUser.displayName}!</h3></div>
+      <div className='title'>
+        <div><h3>{currentUser.name}</h3></div>
+        <div><p>{currentUser.email}</p></div>
+      </div>
     </div>
   );
 };
@@ -89,6 +92,7 @@ Header.propTypes = {
   valueEnd: PropTypes.object,
   handleStartDate: PropTypes.func,
   handleEndDate: PropTypes.func,
+  currentUser: PropTypes.object
 };
 
 export default Header;

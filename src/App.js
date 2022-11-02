@@ -1,11 +1,10 @@
-import { React, useState, useEffect } from 'react';
+import { React, useContext, useState } from 'react';
 import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import NoteList from './components/NoteList';
 import Search from './components/Search';
 import Header from './components/Header';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase';
+import { UserContext } from './UserProvider';
 
 const App=() => {
 
@@ -14,14 +13,7 @@ const App=() => {
   const [ searchText, setSearchText ] = useState('');
   const [ valueStart, setValueStart ] = useState(null);
   const [ valueEnd, setValueEnd ] = useState(null);
-
-  const [ user, setUser ] = useState({});
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  }, [user]);
+  const [currentUser] = useContext(UserContext);
 
   const setItemToLocalStorage = (newNotes) => {
     localStorage.setItem(
@@ -90,7 +82,9 @@ const App=() => {
     <>
       <div className={`${darkMode && 'dark-mode'}`}>
         <div className='container'>
-          <Header handleToggleDarkMode={setDarkMode} handleSort={sort} valueStart={valueStart} valueEnd={valueEnd} handleStartDate={startDateChange} handleEndDate={endDateChange} handleDateFilter={dateFilter} handleResetFilter={resetFilter}/>
+          <Header handleToggleDarkMode={setDarkMode} handleSort={sort} valueStart={valueStart}
+            valueEnd={valueEnd} handleStartDate={startDateChange} handleEndDate={endDateChange} handleDateFilter={dateFilter}
+            handleResetFilter={resetFilter} currentUser={currentUser}/>
           <Search handleSearchNote={setSearchText}/>
           <NoteList notes={notes.filter((note) => note.text.toLowerCase().includes(searchText) || note.title.toLowerCase().includes(searchText))} handleAddNote={addNote} handleDeleteNote={deleteNote}/>
         </div>
