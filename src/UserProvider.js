@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 export const UserContext = createContext([]);
 
-export const UserProvider=(props) => {
+export const UserProvider = (props) => {
 
-  const [ user, setUser ] = useState({ name: null });
+  const [ user, setUser ] = useState(null);
 
   useEffect(() => {
 
