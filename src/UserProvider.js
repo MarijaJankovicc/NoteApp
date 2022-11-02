@@ -6,15 +6,15 @@ export const UserContext = createContext([]);
 
 export const UserProvider = (props) => {
 
-  const [ user, setUser ] = useState({ name: null, email: null });
+  const [ user, setUser ] = useState(null);
 
   useEffect(() => {
 
     const subscribe = auth.onAuthStateChanged(loggedUser => {
       if (loggedUser) {
-        setUser({ name: loggedUser.displayName, email: loggedUser.email });
+        setUser(loggedUser);
       } else {
-        setUser({ name: null, email: null });
+        setUser(null);
       }
     });
     return () => {

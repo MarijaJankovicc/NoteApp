@@ -76,8 +76,8 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
         </span>
       </div>
       <div className='title'>
-        <div><h3>{currentUser.name}</h3></div>
-        <div><p>{currentUser.email}</p></div>
+        <div><h3>{currentUser?.displayName}</h3></div>
+        <div><p>{currentUser?.email}</p></div>
       </div>
     </div>
   );
