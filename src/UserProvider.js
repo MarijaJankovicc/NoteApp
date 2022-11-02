@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 export const UserContext = createContext([]);
 
-export const UserProvider = (props) => {
+export const UserProvider=(props) => {
 
-  const [ user, setUser ] = useState(null);
+  const [ user, setUser ] = useState({ name: null });
 
   useEffect(() => {
 
-    const subscribe = auth.onAuthStateChanged(loggedUser => {
+    const authenticate = auth.onAuthStateChanged(loggedUser => {
       if (loggedUser) {
         setUser(loggedUser);
       } else {
@@ -18,7 +18,7 @@ export const UserProvider = (props) => {
       }
     });
     return () => {
-      subscribe();
+      authenticate();
     };
   }, []);
 
