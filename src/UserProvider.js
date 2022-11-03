@@ -2,15 +2,16 @@ import { React, createContext, useState, useEffect } from 'react';
 import { auth } from './firebase';
 import PropTypes from 'prop-types';
 
-export const UserContext = createContext([]);
+export const UserContext = createContext({});
 
-export const UserProvider = (props) => {
+const UserProvider = (props) => {
 
   const [ user, setUser ] = useState(null);
 
   useEffect(() => {
 
     const authenticate = auth.onAuthStateChanged(loggedUser => {
+      console.log(loggedUser);
       if (loggedUser) {
         setUser(loggedUser);
       } else {
@@ -32,3 +33,4 @@ export const UserProvider = (props) => {
 UserProvider.propTypes = {
   children: PropTypes.any
 };
+export default UserProvider;

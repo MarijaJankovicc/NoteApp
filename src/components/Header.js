@@ -1,4 +1,4 @@
-import { React } from 'react';
+import { React, useContext } from 'react';
 import { MenuItem, Select, TextField} from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -7,10 +7,14 @@ import { useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+import { UserContext } from '../UserProvider';
 
 const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
-                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate, currentUser }) => {
+                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate }) => {
 
+  const [user] = useContext(UserContext);
+  console.log('ovo je u headeru');
+  console.log(user);
   const menuItem = [
     {
       id: 1,
@@ -76,8 +80,8 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
         </span>
       </div>
       <div className='title'>
-        <div><h3>{currentUser?.displayName}</h3></div>
-        <div><p>{currentUser?.email}</p></div>
+        <div><h3>{user?.displayName}</h3></div>
+        <div><p>{user?.email}</p></div>
       </div>
     </div>
   );
