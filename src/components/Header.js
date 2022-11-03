@@ -13,8 +13,7 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
                 handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate }) => {
 
   const [user] = useContext(UserContext);
-  console.log('ovo je u headeru');
-  console.log(user);
+
   const menuItem = [
     {
       id: 1,

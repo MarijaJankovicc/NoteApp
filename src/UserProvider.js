@@ -9,7 +9,6 @@ const UserProvider = (props) => {
   const [ user, setUser ] = useState(null);
 
   useEffect(() => {
-
     const authenticate = auth.onAuthStateChanged(loggedUser => {
       console.log(loggedUser);
       if (loggedUser) {
