@@ -6,15 +6,13 @@ export const UserContext = createContext({});
 
 const UserProvider = (props) => {
 
-  const [ user, setUser ] = useState(null);
+  const [ user, setUser ] = useState({});
 
   useEffect(() => {
     const authenticate = auth.onAuthStateChanged(loggedUser => {
-      console.log(loggedUser);
+      console.log('loggedUser', loggedUser);
       if (loggedUser) {
         setUser(loggedUser);
-      } else {
-        setUser(null);
       }
     });
     return () => {
@@ -23,7 +21,7 @@ const UserProvider = (props) => {
   }, []);
 
   return (
-    <UserContext.Provider value={[ user, setUser ]}>
+    <UserContext.Provider value={{user}}>
       {props.children}
     </UserContext.Provider>
   );

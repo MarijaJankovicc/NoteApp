@@ -12,7 +12,7 @@ import { UserContext } from '../UserProvider';
 const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
                 handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate }) => {
 
-  const [user] = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const menuItem = [
     {
