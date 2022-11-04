@@ -6,13 +6,15 @@ export const UserContext = createContext({});
 
 const UserProvider = (props) => {
 
-  const [ user, setUser ] = useState({});
+  const [ user, setUser ] = useState({data: null});
 
   useEffect(() => {
     const authenticate = auth.onAuthStateChanged(loggedUser => {
       console.log('loggedUser', loggedUser);
       if (loggedUser) {
-        setUser(loggedUser);
+        setUser({data: loggedUser});
+      } else {
+        setUser({data: null});
       }
     });
     return () => {
