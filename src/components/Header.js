@@ -1,4 +1,4 @@
-import {React} from 'react';
+import { React, useContext } from 'react';
 import { MenuItem, Select, TextField} from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -7,9 +7,12 @@ import { useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+import { UserContext } from '../UserProvider';
 
 const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
-                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate}) => {
+                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate }) => {
+
+  const {user} = useContext(UserContext);
 
   const menuItem = [
     {
@@ -75,7 +78,10 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
           <button color='success' className='btn' onClick={signout}>Sign out</button>
         </span>
       </div>
-      <div className='title'><h3>Hello, User!</h3></div>
+      <div className='title'>
+        <div><h3>{user?.data.displayName}</h3></div>
+        <div><p>{user?.data.email}</p></div>
+      </div>
     </div>
   );
 };
@@ -88,7 +94,8 @@ Header.propTypes = {
   valueStart: PropTypes.object,
   valueEnd: PropTypes.object,
   handleStartDate: PropTypes.func,
-  handleEndDate: PropTypes.func
+  handleEndDate: PropTypes.func,
+  currentUser: PropTypes.object
 };
 
 export default Header;
