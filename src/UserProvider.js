@@ -1,21 +1,18 @@
 import { React, createContext, useState, useEffect } from 'react';
 import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import PropTypes from 'prop-types';
 
 export const UserContext = createContext({});
 
 const UserProvider = (props) => {
 
-  const [ user, setUser ] = useState({data: null});
+  const [ user, setUser ] = useState({});
 
   useEffect(() => {
-    const authenticate = auth.onAuthStateChanged(loggedUser => {
+    const authenticate = onAuthStateChanged(auth, loggedUser => {
       console.log('loggedUser', loggedUser);
-      if (loggedUser) {
-        setUser({data: loggedUser});
-      } else {
-        setUser({data: null});
-      }
+      setUser(loggedUser);
     });
     return () => {
       authenticate();

@@ -1,17 +1,20 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import NoteList from './NoteList';
 import Search from './Search';
 import Header from './Header';
+import { UserContext } from '../UserProvider';
 
 const NoteApp=() => {
 
-  const [ notes, setNotes ] = useState(JSON.parse(localStorage.getItem('notes-app-data')));
+  const [ notes, setNotes ] = useState(JSON.parse(localStorage.getItem('notes-app-data')) || []);
   const [ darkMode, setDarkMode ] = useState(false);
   const [ searchText, setSearchText ] = useState('');
   const [ valueStart, setValueStart ] = useState(null);
   const [ valueEnd, setValueEnd ] = useState(null);
+
+  const {user} = useContext(UserContext);
 
   const setItemToLocalStorage = (newNotes) => {
     localStorage.setItem(
@@ -76,6 +79,10 @@ const NoteApp=() => {
     setNotes(JSON.parse(localStorage.getItem('notes-app-data')));
   };
 
+  if (Object.keys(user).length === 0) {
+    return;
+  }
+
   return (
     <>
       <div className={`${darkMode && 'dark-mode'}`}>
@@ -84,7 +91,7 @@ const NoteApp=() => {
             valueEnd={valueEnd} handleStartDate={startDateChange} handleEndDate={endDateChange} handleDateFilter={dateFilter}
             handleResetFilter={resetFilter}/>
           <Search handleSearchNote={setSearchText}/>
-          <NoteList notes={notes.filter((note) => note.text.toLowerCase().includes(searchText) || note.title.toLowerCase().includes(searchText))} handleAddNote={addNote} handleDeleteNote={deleteNote}/>
+          <NoteList notes={notes?.filter((note) => note.text.toLowerCase().includes(searchText) || note.title.toLowerCase().includes(searchText))} handleAddNote={addNote} handleDeleteNote={deleteNote}/>
         </div>
       </div>
     </>
