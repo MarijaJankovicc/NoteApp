@@ -34,7 +34,6 @@ code {
 
 .title {
   display: flex;
-  margin-top: -30px;
   flex-wrap: wrap;
   flex-direction: column;
 }
@@ -82,6 +81,14 @@ textarea:focus {
   margin-right: 8px;
 }
 
+.btnDeleteAll {
+  background-color: #e1e1e1;
+  border: 3px solid rgba(211, 16, 16, 0.815);
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+  margin-right: 8px;
+}
+
 .btnFilter {
   background-color: #e1e1e1;
   border: 3px solid green;
@@ -118,7 +125,17 @@ textarea:focus {
   margin-top: 5px;
 }
 
+.note-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .delete-icon {
+  cursor: pointer;
+}
+
+.edit-icon {
   cursor: pointer;
 }
 
@@ -190,4 +207,11 @@ input:focus {
   background-color: white;
   margin-right: 8px;
   border-radius: 10px; 
+}
+
+.userAndDeleteAllBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -30px;
 }
