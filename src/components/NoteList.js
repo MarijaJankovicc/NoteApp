@@ -3,7 +3,7 @@ import Note from './Note';
 import AddNote from './AddNote';
 import PropTypes from 'prop-types';
 
-const NoteList=({ notes, handleAddNote, handleDeleteNote }) => {
+const NoteList=({ notes, handleAddNote, handleDeleteNote, handleEditNote }) => {
   return (
     <div className='notes-list'>
       {notes.map((note) => (
@@ -14,7 +14,8 @@ const NoteList=({ notes, handleAddNote, handleDeleteNote }) => {
           text={note.text}
           date={note.date}
           color={note.color}
-          handleDeleteNote={handleDeleteNote}/>
+          handleDeleteNote={handleDeleteNote}
+          handleEditNote={handleEditNote}/>
       ))}
       <AddNote handleAddNote={handleAddNote}/>
     </div>
@@ -24,6 +25,7 @@ const NoteList=({ notes, handleAddNote, handleDeleteNote }) => {
 NoteList.propTypes = {
   notes: PropTypes.array,
   handleAddNote: PropTypes.func,
-  handleDeleteNote: PropTypes.func
+  handleDeleteNote: PropTypes.func,
+  handleEditNote: PropTypes.func
 };
 export default NoteList;

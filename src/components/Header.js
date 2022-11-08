@@ -10,7 +10,7 @@ import { auth } from '../firebase';
 import { UserContext } from '../UserProvider';
 
 const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
-                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate }) => {
+                handleResetFilter, valueStart, valueEnd, handleStartDate, handleEndDate, handleDeleteAll }) => {
 
   const {user} = useContext(UserContext);
 
@@ -78,9 +78,14 @@ const Header=({ handleToggleDarkMode, handleSort, handleDateFilter,
           <button color='success' className='btn' onClick={signout}>Sign out</button>
         </span>
       </div>
-      <div className='title'>
-        <div><h3>{user?.displayName}</h3></div>
-        <div><p>{user?.email}</p></div>
+      <div className='userAndDeleteAllBtn'>
+        <div className='title'>
+          <div><h3>{user?.displayName}</h3></div>
+          <div><p>{user?.email}</p></div>
+        </div>
+        <div>
+          <button className='btnDeleteAll' onClick={handleDeleteAll}>Delete all</button>
+        </div>
       </div>
     </div>
   );
@@ -95,7 +100,8 @@ Header.propTypes = {
   valueEnd: PropTypes.object,
   handleStartDate: PropTypes.func,
   handleEndDate: PropTypes.func,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  handleDeleteAll: PropTypes.func
 };
 
 export default Header;

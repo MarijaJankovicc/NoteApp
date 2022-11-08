@@ -43,6 +43,25 @@ const NoteApp=() => {
     setItemToLocalStorage(newNotes);
   };
 
+  const deleteAll = () => {
+    setNotes([]);
+    setItemToLocalStorage([]);
+  };
+
+  const editNote = (id, title, text, date, color) => {
+
+    console.log(id, title, text, date, color);
+
+    const editedNote = notes.map(note => {
+      if (note.id === id) {
+        return {id: id, title: title, text: text, date: date, color: color};
+      }
+      return note;
+    });
+
+    localStorage.setItem('notes-app-data', JSON.stringify(editedNote));
+  };
+
   const sort = (e) => {
     const sortDirection = e.target.value;
     const sortedNotes = [...notes];
@@ -89,9 +108,10 @@ const NoteApp=() => {
         <div className='container'>
           <Header handleToggleDarkMode={setDarkMode} handleSort={sort} valueStart={valueStart}
             valueEnd={valueEnd} handleStartDate={startDateChange} handleEndDate={endDateChange} handleDateFilter={dateFilter}
-            handleResetFilter={resetFilter}/>
+            handleResetFilter={resetFilter} handleDeleteAll={deleteAll}/>
           <Search handleSearchNote={setSearchText}/>
-          <NoteList notes={notes?.filter((note) => note.text.toLowerCase().includes(searchText) || note.title.toLowerCase().includes(searchText))} handleAddNote={addNote} handleDeleteNote={deleteNote}/>
+          <NoteList notes={notes?.filter((note) => note.text.toLowerCase().includes(searchText) || note.title.toLowerCase().includes(searchText))}
+            handleAddNote={addNote} handleEditNote={editNote} handleDeleteNote={deleteNote}/>
         </div>
       </div>
     </>
